@@ -70,13 +70,8 @@ gdf = gpd.GeoDataFrame(filtered_data, geometry=geometry)
 # Set the CRS to WGS84 (latitude/longitude)
 gdf.crs = "EPSG:4326"
 
-# Load the world map shapefile for context (adjust the path to your shapefile location)
-shapefile_path = 'C:/Users/luisc/Downloads/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp'
-world = gpd.read_file(shapefile_path)
-
 # Plot the road closures on a map
 fig, ax = plt.subplots(figsize=(10, 10))
-world.plot(ax=ax, alpha=0.5)  # Make world map a bit transparent
 gdf.plot(ax=ax, color='red', linewidth=2)  # Plot as lines
 
 # Add basemap (OSM) for streets
