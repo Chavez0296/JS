@@ -1,0 +1,19 @@
+
+=================
+MODULE 2 LAB DESCRIPTION
+=================
+In this lab, you will use jQuery to perform various DOM
+related operations. Developing web applications requires
+you to fully manipulate the HTML using JavaScript/jQuery.
+This includes handling events, reading form and HTML elements,
+creating/removing HTML elements, etc. These exercises will
+help you refine your front-end DOM manipulation skills using
+jQuery.
+
+============
+INSTRUCTIONS
+============
+Fork this project to your REPL.it account and follow the
+instructions provided in the index.html page. Use jQuery
+for the exercises and refer to the jQuery reference provided
+to you in Canvas.

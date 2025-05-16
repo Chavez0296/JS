@@ -1,0 +1,56 @@
+========================= INSTRUCTIONS =========================
+   Convert (Angularize) the AJAX weather app you completed
+   earlier in the semester to use AngularJS
+
+   a) For setting up your application for AngularJS
+      See Module 11 - Introduction To AngularJS
+  
+   b) For working with AngularJS' HTTP service to make AJAX calls
+      See Module 12 - AngularJS Validation, Repeaters, Ajax & Useful Directives - AJAX With AngularJS
+  
+   c) For working with images in AngularJS
+      See Module 12 - AngularJS Validation, Repeaters, Ajax & Useful Directives - ng-src Attribute (Directive)
+
+================================================================
+
+============================ STEP 1 ============================
+  REMOVE OLD CODE
+
+  Remove all unnecessary JavaScript/jQuery, all unneeded HTML attributes
+  such as "id" and unnecessary HTML elements such as <span> tags
+  used to output the result using the traditional method.
+================================================================
+
+============================ STEP 2 ============================
+  "BOOTSTRAP" THE APPLICATION USING ANGULARJS
+
+  Add the necessary script, set the ng-app directive, define the
+  controller, initialize "bootstrap" the module, create the controller
+  and import the $scope and $http services.
+================================================================
+
+============================ STEP 3 ============================
+  IMPLEMENT VALIDATION
+
+  Add validation to the Zip code field so that it is required
+  AND that it's a valid zip code. use the input type number
+  AND it's exactly 5 characters indicating a valid Zip code.
+================================================================
+
+============================ STEP 4 ============================
+  HANDLE THE CLICK EVENT FOR THE BUTTON
+
+  Use the ng-click directive on the [Get Current Weather] button
+  to call a function in your controller passing in the Zip code.
+
+================================================================
+
+============================ STEP 5 ============================
+  MAKE THE AJAX CALL
+
+  Use the $http service to make a GET Ajax call to the openweather
+  endpoint and use expressions to output the data. It's best if you
+  define your own model fields rather than assign the entire returned
+  object to the model.
+
+================================================================

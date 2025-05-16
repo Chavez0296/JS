@@ -1,0 +1,4 @@
+=========================== INSTRUCTIONS============================
+   Follow the instructions in the index.html file to complete this
+   lab assignment.
+====================================================================

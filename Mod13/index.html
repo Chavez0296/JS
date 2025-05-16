@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Weather App</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+   <body ng-controller="mainController" ng-init="load()">
+    <div class="alert alert-primary">
+      <a href="#!/">Home</a> |
+      <a href="#!/weather">Weather App</a> |
+      <a href="#!/weather/91352">Sun Valley CA</a>
+    </div>
+    
+    <div ng-view>
+      
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+     <script src="https://code.angularjs.org/1.8.2/angular-route.min.js"></script>
+    
+    <script>
+      var myApp = angular.module("myApp", ["ngRoute"]);
+
+      
+
+      myApp.config(function($routeProvider) {
+        $routeProvider
+        .when("/", {
+          templateUrl: "views/home.html",
+          controller: "homeController"
+        })
+        .when("/weather", {
+            templateUrl: "views/weather.html",
+            controller: "weatherController"
+        })
+        .when("/weather/:zip", {
+            templateUrl: "views/weather.html",
+            controller: "weatherController"
+        });
+        
+      });
+      myApp.controller("mainController", function($scope, $http) {
+
+      });
+
+      
+      myApp.controller("weatherController", function($scope, $http, $routeParams) {
+        
+        if($routeParams.zip){
+        $scope.myzip = $routeParams.zip;
+      
+          $http
+          .get("https://api.openweathermap.org/data/2.5/weather?zip=" + $scope.myzip + ",us&appid=000c53231273df2ac9323e70eee830d4&units=imperial")
+          .then(function(response) {
+            $scope.locationName = response.data.name + ", " + response.data.sys.country;
+            $scope.condition = response.data.weather[0].main;
+            $scope.weatherIcon = response.data.weather[0].icon;
+            $scope.currentTemp = Math.round(response.data.main.temp);
+            $scope.minTemp = Math.round(response.data.main.temp_min);
+            $scope.maxTemp = Math.round(response.data.main.temp_max);
+            $scope.windSpeed = Math.round(response.data.wind.speed);
+            $scope.humidity = Math.round(response.data.main.humidity);
+            $scope.pressure = Math.round(response.data.main.pressure);
+          });
+        }
+
+        $scope.getWeather = function(){
+        $http
+          .get("https://api.openweathermap.org/data/2.5/weather?zip=" + $scope.zipCode + ",us&appid=000c53231273df2ac9323e70eee830d4&units=imperial")
+          .then(function(response) {
+            $scope.locationName = response.data.name + ", " + response.data.sys.country;
+            $scope.condition = response.data.weather[0].main;
+            $scope.weatherIcon = response.data.weather[0].icon;
+            $scope.currentTemp = Math.round(response.data.main.temp);
+            $scope.minTemp = Math.round(response.data.main.temp_min);
+            $scope.maxTemp = Math.round(response.data.main.temp_max);
+            $scope.windSpeed = Math.round(response.data.wind.speed);
+            $scope.humidity = Math.round(response.data.main.humidity);
+            $scope.pressure = Math.round(response.data.main.pressure);
+          });
+        }
+      });
+
+      myApp.controller("homeController", function($scope) {
+           
+      });
+    </script>
+  </body>
+</html>

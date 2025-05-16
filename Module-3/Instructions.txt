@@ -1,0 +1,92 @@
+=================
+LAB 3 DESCRIPTION
+=================
+In this lab, you will create a simple weather app using Ajax
+to access a free weather RESTful Web Service. You will need
+to study the API documentation to come up with the endpoint
+URL that will be used to access the resource. The endpoint
+will return JSON which you will use to populate the various
+weather elements in the application.
+
+============
+INSTRUCTIONS
+============
+1. Fork this project to your REPL.it account
+
+2. All your JavaScript should go inside the script.js file.
+
+3. Study the HTML. You will notice the elements that hold
+   weather information have already been defined for you
+   along with id attributes. Make note of the elements and
+   refer to the table below for the ids and what weather element
+   should go there.
+
+4. The API documentation for the Open Weather service can be found at:
+
+   https://openweathermap.org/current
+
+   The app uses ZIP codes to return results, look in the documentation
+   for the "By Zip Code" section to see an example of what the endpoint
+   URL should look like. You will need an "appid" query string argument
+   appended to the URL to function. The API endpoint and appid is:
+
+   Endpoint: https://api.openweathermap.org/data/2.5/weather
+   Appid: 000c53231273df2ac9323e70eee830d4
+
+   Use your web browser to test the endpoint. Mozilla Firefox works
+   best since it can format JSON nicely for you to read. You can also
+   use the free REQBIN service for testing: https://reqbin.com/
+
+   You will also need to return the results in imperial units. You can
+   append the units=imperial query string argument for this.
+
+5. The endpoint returns JSON. You can use the jQuery $.getJSON()
+   Ajax method to invoke the API. Check the Ajax reference for
+   code samples.
+
+6. Once you have the JSON as an object, use the jQuery DOM manipulation
+   functions to write the weather data to the DOM. (text() or html())
+   Use the fadeIn and fadeOut effect to give the weather elements a nice
+   visual effect on each update. You will also have to set the weather icon
+   using jQuery's functions. Clear the Zip code text box after a successful
+   update.
+
+7. Extra Credit (10pts)
+   Add error checking to make sure the Zip code entered is found and contains
+   results. You will have to study the documentaion and test the API to see what
+   to check for.
+
+
+USE THE BELOW ELEMENT ID AND DESCRIPTION
+
+|=================|============================================================================|
+| HTML Element ID | Description                                                                |
+|=================|============================================================================|
+| locationName    | The city and country code should go here ex: "Sylmar, US"                  |
+|                 |                                                                            |
+| condition       | The general weather condition blurb                                        |
+|                 |                                                                            |
+| weatherIcon     | The icon that represents the weather condition. You can                    |
+|                 | get the icon image by appending the iconcode in the JSON result            |
+|                 | to the following URL: https://openweathermap.org/img/wn/{iconcode}@2x.png  |
+|                 |                                                                            |
+| currentTemp     | The current temperature (rounded to whole) Math.round()                    |
+|                 |                                                                            |
+| minTemp         | The low for the day (rounded to whole) Math.round()                        |
+|                 |                                                                            |
+| maxTemp         | The high for the day (rounded to whole) Math.round()                       |
+|                 |                                                                            |
+| windSpeed       | Wind speed (rounded to whole) Math.round()                                 |
+|                 |                                                                            |
+| humidity        | Relative Humidity                                                          |
+|                 |                                                                            |
+| pressure        | The current pressure                                                       |
+|_________________|____________________________________________________________________________|
+
+==============
+HELP RESOURCES
+==============
+RESTFul API - https://docs.google.com/presentation/d/1WgxJquZuoBUfvq9bSM2PJw2x0sxikejOo3I04i8PZnY/edit?usp=sharing
+JSON - https://ilearn.laccd.edu/courses/185123/pages/module-3-json?module_item_id=5377039
+Ajax - https://ilearn.laccd.edu/courses/185123/pages/module-3-ajax?module_item_id=5377041
+jQuery - https://ilearn.laccd.edu/courses/185123/pages/module-2-introduction-to-jquery

@@ -1,0 +1,67 @@
+  <!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>CS157 Module 3 Example 1</title>
+  </head>
+  <body>
+
+      <div class="container">
+        <div class="jumbotron p-4">
+          <h2>OMDb Search</h2>
+          <form class="form-inline">
+            <input id="search" type="text" class="form-control" placeholder="Movie Search"/>
+            <button id="searchBtn" type="button" class="btn btn-success">Search</button>
+          </form>
+          <ul id="searchResults" class="list-group">
+            
+          </ul>
+        </div>
+      </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+    <script>
+
+      $("#searchBtn").on("click", ()=> {
+        let searchTerm = $("#search").val();
+
+        //let endpointUrl = "https://www.omdbapi.com/?apikey=130d2b6b&s=" + searchTerm;
+        let endpointUrl = `https://www.omdbapi.com/?apikey=130d2b6b&s=${searchTerm}`;
+
+        // Make a GET request to the endpoint URL.
+        // We are going to use jQuery's .getJSON() function to do this.
+
+        $.getJSON(endpointUrl, (result) => {
+          if (result.Response === "True") { // We have results
+            for (let movie of result.Search) { // Looping through the results
+              let newLi = $("<li></li>");
+              newLi.attr("class", "list-group-item");
+              newLi.text(movie.Title);
+
+              let newImg = $("<br/><img/>");              
+              newImg.attr("src", movie.Poster);
+
+              let newLink = $("<a></a>");
+              newLink.attr("href", "https://www.imdb.com/title/" + movie.imdbID);
+              newLink.text("imdb page");
+
+              newLi.append(newLink);
+              newLi.append(newImg);
+              
+              $("#searchResults").append(newLi);
+            }
+          }
+        })
+      })
+      
+    </script>    
+  </body>
+</html>

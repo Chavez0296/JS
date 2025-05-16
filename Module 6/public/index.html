@@ -1,0 +1,261 @@
+<!-- View the Instructions.txt file to get started -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Module 6 Lab - Employee Login/Update</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <!-- Popper needed for some Bootstrap components -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>   
+
+
+    <!-- LOGIN VIEW -->
+    <div id="loginView" class="container jumbotron py-4 px-4 text-center">
+      <form class="form-signin">
+        <img class="mb-2" src="/images/key.png" alt="" width="72" height="72">
+        <h1 class="h3 mb-3">Please sign in</h1>
+        <input id="emailTxt" type="email" class="form-control mb-3" placeholder="Email Address" required autofocus/>
+        <input id="passwordTxt" type="password" class="form-control mb-3" placeholder="Password" required/>
+        <button id="signinBtn" class="btn btn-lg btn-primary btn-block" type="button">Sign in</button>
+        <div id="errorAlert" class="alert alert-danger mt-3 mb-0 hidden"></div>
+      </form>
+    </div>
+
+
+    <!-- EMPLOYEE UPDATE VIEW -->
+    <div id="updateView" class="container jumbotron py-4 px-4 hidden">
+        <h3>Employee Information</h3>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Name</label>
+            <input id="nameTxt" type="text" class="form-control">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Email</label>
+            <input id="emailAddressTxt" type="email" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Street</label>
+          <input id="streetTxt" type="text" class="form-control">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>City</label>
+            <input id="cityTxt" type="text" class="form-control">
+          </div>
+          <div class="form-group col-md-1">
+            <label>State</label>
+            <input id="stateTxt" type="text" class="form-control">
+          </div>
+          <div class="form-group col-md-2">
+            <label>Zip</label>
+            <input id="zipTxt" type="text" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Phone</label>
+            <input id="phoneTxt" type="text" class="form-control">
+          </div>
+        </div>
+        <button id="updateBtn" type="button" class="btn btn-success mb-2">Update</button>
+        <button id="logoutBtn" type="button" class="btn btn-danger mb-2">Log Out</button>
+        <div id="statusAlert" class="alert alert-secondary mt-3 mb-0 hidden"></div>
+    </div>
+
+    <script>
+      /* 
+        PART 1 - AUTHENTICATION
+
+        Use Ajax to authenticate the employee by doing a POST request to the
+        /api/employees/login endpoint and sending the appropriate JSON
+        data consisting of the email and password (data format in Instructions.txt)
+
+        1. Create an object that represents the login information based
+           on the email and password.
+
+        2. Make a POST Ajax request to the endpoint /api/employees/login
+           and pass in the login JSON created in step 1. Remember to set the
+           appropriate contentType and stringify the object!
+
+        ON AJAX SUCCESS: If the authentication is successful, pass the returned result
+                         object to the loadUpdateForm() function. Example: loadUpdateForm(result)
+
+        ON AJAX ERROR: If the authentication is unsuccessful, .show() the alert div with
+                      id #errorAlert and display the result's responseText inside it (.text())
+      */
+
+      $("#signinBtn").on("click", function() {
+        // Part 1 code here     
+        let login = {
+          email: $("#emailTxt").val(),
+          password: $("#passwordTxt").val()
+        };
+        $.ajax({
+          url: "/api/employees/login",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(login),
+          success: function(result){ 
+
+          alert('successful login');
+               loadUpdateForm(result);
+            },
+          error: function(result) { //error 
+               alert(result.responseText);
+          }
+        });
+      });
+
+
+
+      /*
+        PART 2 - LOAD EMPLOYEE DATA
+        
+        1. The currentEmployeeId global variable holds the ID of the current
+            employee that's loaded in the form. Set the currentEmployeeId to
+            the id of the employee that's passed into this function (result.id)
+
+        2. Populate the form fields with the data. The data elements are:
+            name, email, street, city, state, zip and phone. Locate the text box
+            ids from the HTML above.
+      */
+      let currentEmployeeId;
+      function loadUpdateForm(result) {
+        showUpdateForm();
+        // Part 2 code here
+        currentEmployeeId = result.id;
+        $("#nameTxt").val(result.name);
+        $("#emailAddressTxt").val(result.email);
+        $("#streetTxt").val(result.street);
+        $("#cityTxt").val(result.city);
+        $("#stateTxt").val(result.state);
+        $("#zipTxt").val(result.zip);
+        $("#phoneTxt").val(result.phone);
+
+
+      }
+
+
+
+      /*
+        PART 3 - UPDATE EMPLOYEE
+        
+        Use Ajax to update the employee by doing a PUT request to the
+        /api/employees/:id endpoint and sending the appropriate JSON
+        data consisting of the updated data (data format in Instructions.txt)
+
+        1. Create an object that represents the updated information based
+           on the form fields in the HTML.
+
+        2. Make a PUT Ajax request to the endpoint /api/employees/:id using the
+           id from the currentEmployeeId global variable and sending the JSON created
+           in step 1. You must set the appropriate contentType and stringify the object!
+
+        ON AJAX SUCCESS: If the update is successful, .show() the alert div with
+                         id #statusAlert and display "Successfully Updated" inside the div
+
+        ON AJAX ERROR: If the UPDATE is unsuccessful, .show() the alert div with
+                      id #statusAlert and display the result's responseText in it.
+      */
+
+      $("#updateBtn").on("click", function() {
+        // Part 3 code here
+        updatedEmployeeInfo = {
+          name: $("#nameTxt").val(),
+          email: $("#emailAddressTxt").val(),
+          street: $("#streetTxt").val(),
+          city: $("#cityTxt").val(),
+          state: $("#stateTxt").val(),
+          zip: $("#zipTxt").val(),
+          phone: $("#phoneTxt").val(),
+        };
+        
+        updatedEmployeeInfo = JSON.stringify(updatedEmployeeInfo);
+
+        $.ajax({
+          url: "/api/employees/" + currentEmployeeId,
+          type: "PUT",
+          data: updatedEmployeeInfo,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(result) {
+            $("#statusAlert").text("Successfully updated");
+            $("#statusAlert").show();
+          },
+          error: function(result) {
+            if (result.status == 404) {
+              alert("/api/employees/:id endpoint not implemented or an error occurred.");
+            }
+            else
+            {
+              $("#statusAlert").text(result.responseText);
+              $("#statusAlert").show();
+            }
+          }
+        });
+      });
+
+
+      /*
+        PART 4 - EXTRA CREDIT (20 pts.)
+        
+        Implement functionality to delete the employee. You will need to create
+        the DELETE endpoint in Express using the appropriate employeeDatabase CRUD
+        function first. Once the endpoint is created, create a [Delete] button and
+        the corresponding click handler along with the Ajax to delete the employee
+        that's currently logged in. Upon successful deletion, hide log the user out
+        and reset everything by calling the hideUpdateForm() function.
+      */
+
+      // Part 4 code here (extra credit)
+
+
+
+
+
+
+      // DO NOT MODIFY ANY CODE BELOW THIS LINE.
+      //========================================
+
+      // Log out button handler is already created for you below.
+      $("#logoutBtn").on("click", function() {
+        hideUpdateForm();
+      });
+
+      // Function to show the update form.
+      function showUpdateForm() {
+        $("#loginView").hide();
+        $("#updateView").show();
+      }
+
+      // Function to hide the update form and clear out all the fields.
+      function hideUpdateForm() {
+        $("#emailTxt").val("");
+        $("#passwordTxt").val("");
+        $("#updateView").hide();
+        $("#loginView").show();
+        $("#statusAlert").hide().empty();
+        $("#errorAlert").hide().empty();
+        $("#nameTxt").val("");
+        $("#emailAddressTxt").val("");
+        $("#streetTxt").val("");
+        $("#cityTxt").val("");
+        $("#stateTxt").val("");
+        $("#zipTxt").val("");
+        $("#phoneTxt").val("");
+      }
+    </script>
+
+
+  </body>
+</html>

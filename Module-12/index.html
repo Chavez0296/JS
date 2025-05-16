@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Weather App</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  </head>
+
+  <body ng-controller="mainController">
+    <div style="margin:auto; margin-top:50px; width:310px;">
+      <form>
+        <div class="form-inline">
+              <input ng-model="zipCode" ng-pattern="/^\d{5}$/" required type="text" id="zipCode" class="form-control mb-4 mr-2" style="width:120px;" placeholder="ZIP Code"/>
+              <button ng-click="update(zipCode)" ng-disabled="myForm.$invalid" type="button" id="getWeatherBtn" class="btn btn-warning mb-4">Get Current Weather</button>
+        </div>
+      </form>
+      <div class="weatherContainer">
+        <div class="weatherHeader">
+            <div>
+              <h2 class="title"><span id="locationName">Location: NA</span></h2>
+              <p class="description"><span id="condition">Condition: NA</span></p>
+            </div>
+            <img id="weatherIcon" ng-show="ifImg" src="https://openweathermap.org/img/wn/{{image}}@2x.png" width="128" height="128" class="icon"/>
+            <img id="imgPlaceholder" ng-hide="ifImg" ng-src="naicon.png" width="128" height="128" class="icon"/>
+        </div>
+        <div class="weatherBody">
+          <div class="temperature">
+            {{temperature}} °F
+          </div>
+          <div class="weatherDetails">
+            <table class="t">
+              <tbody>
+              <tr>
+                <th colspan="2">Details</th>
+              </tr>
+              <tr>
+                <td>Min.</td>
+                <td>{{minTemp}} °F</td>
+              </tr>
+              <tr>
+                <td>Max.</td>
+                <td>{{maxTemp}} °F</td>
+              </tr>
+              <tr>
+                <td>Wind</td>
+                <td>{{windSpeed}} mph</td>
+              </tr>
+              <tr>
+                <td>Humidity</td>
+                <td>{{humidity}}%</td>
+              </tr>
+              <tr>
+                <td>Pressure</td>
+                <td>{{pressure}} hPa</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+
+      let app = angular.module("app", []);
+
+      app.controller("mainController", function($scope, $http) {
+        $scope.image = "naicon.png";
+
+        $scope.update = function(zip){
+          $http.get("https://api.openweathermap.org/data/2.5/weather?zip=" + zip + ",us&appid=000c53231273df2ac9323e70eee830d4&units=imperial")
+          .then(function(response) {
+            $scope.ifImg = true;
+            $scope.location = response.data.name;
+            $scope.condition = response.data.weather[0].main;
+            $scope.temperature = Math.round(response.data.main.temp);
+            $scope.minTemp = Math.round(response.data.main.temp_min);
+            $scope.maxTemp = Math.round(response.data.main.temp_max);
+            $scope.windSpeed = Math.round(response.data.wind.speed);
+            $scope.humidity = response.data.main.humidity;
+            $scope.pressure = response.data.main.pressure;
+            $scope.image =  response.data.weather[0].icon;
+          })
+          .catch(function(err) {
+            $scope.ifImg = "";
+              alert(err.data.message);
+          });
+        }
+
+      });
+    </script>
+  </body>
+</html>

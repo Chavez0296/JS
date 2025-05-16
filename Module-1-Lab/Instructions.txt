@@ -1,0 +1,40 @@
+
+=================
+INSTRUCTIONS INFO
+=================
+Since this is your first lab, I want to describe
+the various types of instructions that will be
+provided for you in your future labs.
+
+-- Instructions.txt
+Every lab will include this Instructions.txt file
+containing a description of the lab as well as
+any instructions to follow for that particular
+lab. The instructions file may also contain
+relevant references, hints or other details
+that will help you complete it.
+
+-- In-line Instructions
+In-line instructions are typically comments that are placed
+above, below or in-between existing code and act as both
+a placeholder for *where* your code should go as well as
+*what* should go there. When you see in-line instructions,
+assume that any code/function required should be placed
+right below the in-line instruction.
+
+=================
+LAB 1 DESCRIPTION
+=================
+In this lab, you will use your existing HTML/CSS skills
+along with the provided references to create a simple 
+HTML page from scratch that is fully responsive using
+the Bootstrap CSS framework. The end result will be a
+page that contains various text/visual and form elements.
+
+============
+INSTRUCTIONS
+============
+Fork this project to your REPL.it account and follow the
+instructions in the PDF provided for you in the Lab 1
+assignment. You can also download the instructions at
+the following URL: https://ilearn.laccd.edu/courses/185123/files/29095700/download?wrap=1

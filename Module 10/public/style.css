@@ -1,0 +1,7 @@
+.hidden {
+    display: none;
+  }
+  
+  #loginView, #registerView {
+    width:400px;
+  }
