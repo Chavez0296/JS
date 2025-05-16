@@ -1,0 +1,35 @@
+<div class="tr-breadcrumb bg-image section-before">
+  <div class="container">
+    <div class="breadcrumb-info text-center">
+      <div class="page-title">
+        <h1>Sign In</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="tr-account section-padding">
+  <div class="container text-center">
+    <div class="user-account">
+      <div class="account-content">
+        <form class="tr-form" name="signinForm">
+          <div class="form-group">
+            <div style="color:red" ng-show="signinForm.email.$error.required" >
+              <b>Required</b></div>
+            <input type="email" class="form-control" placeholder="Enter Your Email" name="email" ng-required="true" ng-model="email" ng-maxlength="30">
+          </div>
+          <div class="form-group">
+            <div style="color:red" ng-show="signinForm.password.$error.required" >
+              <b>Required</b></div>
+            <input type="password" class="form-control" placeholder="Password" name="password" ng-required="true" ng-model="password" ng-maxlength="100">
+          </div>
+          <button type="button" class="btn btn-primary" ng-click="Signin()" ng-disabled="signinForm.$invalid">Login</button>
+        </form>
+        <div class="new-user text-center">
+          <span><a href="#!/register">Create a New Account</a> </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
